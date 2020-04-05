@@ -1,0 +1,10 @@
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NeuralNet.exe.config
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NeuralNet.exe
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NeuralNet.pdb
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.csprojAssemblyReference.cache
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.Form1.resources
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.Properties.Resources.resources
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.csproj.GenerateResource.cache
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.csproj.CoreCompileInputs.cache
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.exe
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.pdb
