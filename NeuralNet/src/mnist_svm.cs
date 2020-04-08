@@ -8,5 +8,8 @@ namespace NeuralNet.src
 {
     class mnist_svm
     {
+        public void svm_baseline() { 
+        
+        }
     }
 }

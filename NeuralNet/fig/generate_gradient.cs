@@ -8,5 +8,17 @@ namespace NeuralNet.fig
 {
     class generate_gradient
     {
+        public void main() { 
+        }
+
+        public void initial_norms() { 
+        }
+
+        public void training() { }
+        public void plot_training() { }
+        public void get_average_gradient() { }
+        public void zip_sum() { }
+        public void list_sum() { }
+        public void list_norm() { }
     }
 }

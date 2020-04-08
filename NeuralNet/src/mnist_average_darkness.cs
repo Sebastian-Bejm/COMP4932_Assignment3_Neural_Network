@@ -8,5 +8,13 @@ namespace NeuralNet.src
 {
     class mnist_average_darkness
     {
+        public void main() { 
+        }
+
+        public void avg_darknesses() { 
+        }
+
+        public void guess_digit() { 
+        }
     }
 }
