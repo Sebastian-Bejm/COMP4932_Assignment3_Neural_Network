@@ -1,1 +1,5 @@
 /NeuralNet/obj/Debug/*
+/NeuralNet/.vs/*
+
+*.vs
+*.exe
