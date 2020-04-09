@@ -1,0 +1,10 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\NeuralNet",
+    "\\NeuralNet\\Data",
+    "\\NeuralNet\\src"
+  ],
+  "SelectedNode": "\\NeuralNet\\src\\mnist_loader.cs",
+  "PreviewInSolutionExplorer": false
+}
