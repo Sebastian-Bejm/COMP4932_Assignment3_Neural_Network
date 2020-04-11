@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using NeuralNet.src;
+using NumSharp;
 
 namespace NeuralNet
 {
@@ -19,7 +20,17 @@ namespace NeuralNet
         public Form1()
         {
             InitializeComponent();
-            ml.load_data_wrapper(); // testing for now
+            Tuple<Tuple<NDArray, NDArray>, Tuple<NDArray, NDArray>, Tuple<NDArray, NDArray>> tuple = ml.load_data_wrapper(); // testing for now
+
+            Tuple<NDArray, NDArray> training_data = tuple.Item1;
+            Tuple<NDArray, NDArray> validation_data = tuple.Item2;
+            Tuple<NDArray, NDArray> test_data = tuple.Item3;
+
+            network network = new network(new NDArray(784,30,10));
+
+
+
+
         }
     }
 }

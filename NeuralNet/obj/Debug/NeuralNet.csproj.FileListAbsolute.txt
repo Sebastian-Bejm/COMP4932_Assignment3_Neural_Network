@@ -37,3 +37,23 @@ C:\Users\Sebastian\Documents\Term 4\COMP4932_Assignment3_Nerual_Network\NeuralNe
 C:\Users\Sebastian\Documents\Term 4\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.csproj.CopyComplete
 C:\Users\Sebastian\Documents\Term 4\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.exe
 C:\Users\Sebastian\Documents\Term 4\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.pdb
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\Keras.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\MatplotlibCS.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\Newtonsoft.Json.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NLog.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\Numpy.Bare.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NumSharp.Core.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\Python.Runtime.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Buffers.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Memory.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\MatplotlibCS.pdb
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\Newtonsoft.Json.xml
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NLog.xml
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NumSharp.Core.pdb
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Buffers.xml
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Memory.xml
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\obj\Debug\NeuralNet.csproj.CopyComplete
