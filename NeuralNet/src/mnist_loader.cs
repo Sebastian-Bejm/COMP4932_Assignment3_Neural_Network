@@ -17,45 +17,23 @@ namespace NeuralNet.src
         private const string TestImages = "\\Data\\t10k-images-idx3-ubyte\\t10k-images.idx3-ubyte";
         private const string TestLabels = "\\Data\\t10k-labels-idx1-ubyte\\t10k-labels.idx1-ubyte";
 
-        public Tuple<Tuple<NDArray, NDArray>, Tuple<NDArray, NDArray>, Tuple<NDArray, NDArray>> load_data() { 
+        public Tuple<List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>> load_data() { 
+
             string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
-            List<DigitImage> temp_training_data = ReadTrainingData(path).ToList();
-            // validation and test data are the same
-            List<DigitImage> temp_validation_data = ReadTestData(path).ToList();
-            List<DigitImage> temp_test_data = ReadTestData(path).ToList();
-
-            Tuple<NDArray, NDArray> training_data = CreateNDArrayTuple(temp_training_data); 
-            Tuple<NDArray, NDArray> validation_data = CreateNDArrayTuple(temp_validation_data); 
-            Tuple<NDArray, NDArray> test_data = CreateNDArrayTuple(temp_test_data); 
+            List<Tuple<NDArray, NDArray>> training_data = ReadTrainingData(path).ToList();
+            List<Tuple<NDArray, NDArray>> validation_data = ReadTestData(path).ToList();
+            List<Tuple<NDArray, NDArray>> test_data = ReadTestData(path).ToList();
 
             return Tuple.Create(training_data, validation_data, test_data);
-        }
-
-
-        private Tuple<NDArray, NDArray> CreateNDArrayTuple(List<DigitImage> data)
-        {
-            int n = data.Count();
-            var firstEntry = np.arange(n * 28 * 28).reshape(n, 28, 28); // n entries of 28*28 NDArrays
-            var secondEntry = np.arange(n).reshape(n); // n entries of labels/digit
-
-            for (int i = 0; i < data.Count(); i++)
-            {
-                firstEntry[i] = data[i].Data; // the 28*28 NDArray
-                int val = data[i].Label; // label of the digit represented
-                secondEntry[i] = val;
-                
-            }
-
-            return Tuple.Create(firstEntry, secondEntry);
         }
 
         /*
          * Support method for reading the training data 
          */
-        private IEnumerable<DigitImage> ReadTrainingData(string path)
+        private IEnumerable<Tuple<NDArray, NDArray>> ReadTrainingData(string path)
         {
-            foreach (var item in Read(path+TrainImages, path+TrainLabels))
+            foreach (var item in Read(path + TrainImages, path + TrainLabels))
             {
                 yield return item;
             }
@@ -64,18 +42,19 @@ namespace NeuralNet.src
         /*
          * Support method for reading the test data
          */
-        private IEnumerable<DigitImage> ReadTestData(string path)
+        private IEnumerable<Tuple<NDArray, NDArray>> ReadTestData(string path)
         {
             foreach (var item in Read(path + TestImages, path + TestLabels))
             {
                 yield return item;
             }
-        }        
+        }
 
+        
         /*
-         * Support method for reading in the data given the paths and returns it as a DigitImage 
+         * Support method for reading in the data from the filepath specified
          */
-        private IEnumerable<DigitImage> Read(string imagesPath, string labelsPath)
+        private IEnumerable<Tuple<NDArray, NDArray>> Read(string imagesPath, string labelsPath)
         {
             BinaryReader images, labels;
 
@@ -101,45 +80,69 @@ namespace NeuralNet.src
 
                         arr.ForEach((j, k) => arr[j, k] = bytes[j * height + k]);
 
-                        yield return new DigitImage()
-                        {
-                            Data = arr,
-                            Label = labels.ReadByte()
-                        };
+                        var imageData = np.arange(width * height).reshape(28, 28); // first ndarray for image data
+                        imageData = arr;
+
+                        byte bLabel = labels.ReadByte();
+                        int iLabel = bLabel;
+                        var labelNd = np.full(iLabel, 1); // second ndarray for label
+
+                        var result = new Tuple<NDArray, NDArray>(imageData, labelNd);
+
+                        yield return result;
                     }
                 }
             }
 
         }
 
-        public Tuple<Tuple<NDArray, NDArray>, Tuple<NDArray, NDArray>, Tuple<NDArray, NDArray>> load_data_wrapper() {
+        public Tuple<List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>> load_data_wrapper() {
 
-            Tuple<Tuple<NDArray, NDArray>, Tuple<NDArray, NDArray>, Tuple<NDArray, NDArray>> all_data = load_data();
-            Tuple<NDArray, NDArray> tr_d = all_data.Item1; // training
-            Tuple<NDArray, NDArray> va_d = all_data.Item2; // validation
-            Tuple<NDArray, NDArray> te_d = all_data.Item3; // test
+            Tuple<List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>> all_data = load_data();
+            List<Tuple<NDArray, NDArray>> tr_d = all_data.Item1; // training data
+            List<Tuple<NDArray, NDArray>> va_d = all_data.Item2; // validation data
+            List<Tuple<NDArray, NDArray>> te_d = all_data.Item3; // test data
 
-            // training data
-            var training_inputs = tr_d.Item1;
-            var training_results = tr_d.Item2;
-            var vectorized_training_results = np.arange(training_results.size*10).reshape(training_results.size, 1, 10);
-            
-            int i = 0;
-            foreach (int digit in training_results)
+            List<Tuple<NDArray, NDArray>> training_data = new List<Tuple<NDArray, NDArray>>();
+
+            foreach (var tup in tr_d)
             {
-                var vector = vectorized_result(digit);
-                vectorized_training_results[i++] = vector;
+                var input = tup.Item1; // image data
+                var result = tup.Item2; // digit
+
+                var training_input = np.reshape(input, 784, 1);
+                var training_result = vectorized_result(result[0]); // vectorize the digit
+
+                training_data.Add(Tuple.Create(training_input, training_result));
             }
 
-            Tuple<NDArray, NDArray> training_data = Tuple.Create(training_inputs, vectorized_training_results);
+            List<Tuple<NDArray, NDArray>> validation_data = new List<Tuple<NDArray, NDArray>>();
 
-            // our validation and test data are already organized from load_data()
+            foreach (var tup in va_d)
+            {
+                var input = tup.Item1;
 
-            return Tuple.Create(training_data, va_d, te_d);
+                var validation_input = np.reshape(input, 784, 1);
+
+                validation_data.Add(Tuple.Create(validation_input, tup.Item2));
+            }
+
+            List<Tuple<NDArray, NDArray>> test_data = new List<Tuple<NDArray, NDArray>>();
+
+            foreach (var tup in te_d)
+            {
+                var input = tup.Item1;
+
+                var test_input = np.reshape(input, 784, 1);
+
+                test_data.Add(Tuple.Create(test_input, tup.Item2));
+            }
+
+            return Tuple.Create(tr_d, va_d, te_d);
         }
 
         public NDArray vectorized_result(int j) {
-            var e = new NDArray(typeof(double), 10);
+            var e = np.zeros(10, 1);
             e[j] = 1.0;
             return e;
         }
