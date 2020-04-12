@@ -26,7 +26,7 @@ namespace NeuralNet
             List<Tuple<NDArray, NDArray>> validation_data = tuple.Item2;
             List<Tuple<NDArray, NDArray>> test_data = tuple.Item3;
 
-            Console.WriteLine(test_data[0].Item2.Shape);
+            //Console.WriteLine(training_data[1].Item2.Shape);
 
             //Console.WriteLine(training_data.Count);
             //Console.WriteLine(validation_data.Count);
