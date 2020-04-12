@@ -138,7 +138,7 @@ namespace NeuralNet.src
                 test_data.Add(Tuple.Create(test_input, tup.Item2));
             }
 
-            return Tuple.Create(tr_d, va_d, te_d);
+            return Tuple.Create(training_data, validation_data, test_data);
         }
 
         public NDArray vectorized_result(int j) {

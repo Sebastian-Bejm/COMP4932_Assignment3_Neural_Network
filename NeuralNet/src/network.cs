@@ -26,32 +26,30 @@ namespace NeuralNet.src
             }
         }
 
-        public network(NDArray size)
+        public network(int[] size)
         {
-            num_layers = size.size;
+            num_layers = size.Length;
             sizes = size;
-            biases = new List<NDArray>(sizes.size-1);//new int[sizes.Length-1];
-
-            for (int y = 1; y < size.size; y++) {
-                biases[y] = NumSharp.np.random.randn(y, 1);
+            biases = new List<NDArray>();
+            weights = new List<NDArray>();
+            for (int y = 1; y < size.Length; y++) {
+                biases.Add(np.random.randn(size[y], 1));
             }
-
-            for (int i = 0,x = 1, y = size.size-1; x < size.size; x++, y--) {
-                weights[0] = NumSharp.np.random.randn(size[y], size[x]);
+            for (int x = 0, y = 1; x < size.Length-1; x++, y++) {
+                weights.Add(np.random.randn(size[y], size[x]));
             }
-
         }
 
-        public NDArray feedfoward(NDArray a)
+        public NDArray feedforward(NDArray a)
         {
-            for (int i = 0; i < sizes.size; i++) {
-                a = sigmoid(NumSharp.np.dot(weights[i],a) + weights[i]);
+            for (int i = 0; i < biases.Count; i++) {
+                a = sigmoid(np.dot(weights[i],a) + biases[i]);
             }
             return a;
         }
 
         //not finished translating
-        public void SGD(List<Tuple<NDArray,NDArray>> training_data, int epochs, int mini_batch_size, int eta, List<Tuple<NDArray,NDArray>> test_data)
+        public void SGD(List<Tuple<NDArray,NDArray>> training_data, int epochs, int mini_batch_size, double eta, List<Tuple<NDArray,NDArray>> test_data)
         {
             int n_test = 0;
             if (test_data != null) n_test = test_data.Count;
@@ -64,8 +62,9 @@ namespace NeuralNet.src
                 //not sure if this is a list of list of tuples
                 List<List<Tuple<NDArray,NDArray>>> mini_batches = new List<List<Tuple<NDArray, NDArray>>>();
 
-                for (int k = 0; k < n; k+=mini_batch_size) {
-                    mini_batches.Add(training_data.GetRange(k,k+mini_batch_size));
+                for (int k = 0; k < n; k += mini_batch_size)
+                {
+                    mini_batches.Add(training_data.GetRange(k, mini_batch_size));
                 }
 
                 foreach (List<Tuple<NDArray,NDArray>> mini_batch in mini_batches) {
@@ -74,7 +73,7 @@ namespace NeuralNet.src
 
                 if (test_data != null)
                 {
-                    Console.WriteLine("Epoch {}: {1} / {2}",j, evaluate(test_data),n_test);
+                    Console.WriteLine("Epoch {0}: {1} / {2}",j, evaluate(test_data),n_test);
                 }
                 else 
                 {
@@ -83,15 +82,13 @@ namespace NeuralNet.src
             }
         }
 
-        public void update_mini_batch(List<Tuple<NDArray,NDArray>> mini_batch, int eta)
+        public void update_mini_batch(List<Tuple<NDArray,NDArray>> mini_batch, double eta)
         {
             List<NDArray> nabla_b = new List<NDArray>();
-            for (int i = 0; i < nabla_b.Count;i++) { nabla_b.Add(np.zeros(biases.ElementAt(i).Shape)); }
+            for (int i = 0; i < biases.Count;i++) { nabla_b.Add(np.zeros(biases[i].shape)); }
             
             List<NDArray> nabla_w = new List<NDArray>();
-            for (int i = 0; i < nabla_w.Count; i++) { nabla_w.Add(np.zeros(weights.ElementAt(i).Shape)); }
-
-            int count = 0;
+            for (int i = 0; i < weights.Count; i++) { nabla_w.Add(np.zeros(weights[i].shape)); }
 
             for (int i = 0; i < mini_batch.Count; i++) {
                 Tuple<List<NDArray>, List<NDArray>> back = backprop(mini_batch[i].Item1, mini_batch[i].Item2);
@@ -101,7 +98,7 @@ namespace NeuralNet.src
                     nabla_b[j] = nabla_b[j]+delta_nabla_b[j];
                 }
 
-                for (int j = 0; i < nabla_b.Count; j++)
+                for (int j = 0; j < nabla_w.Count; j++)
                 {
                     nabla_w[j] = nabla_w[j] + delta_nabla_w[j];
                 }
@@ -122,18 +119,18 @@ namespace NeuralNet.src
         {
 
             List<NDArray> nabla_b = new List<NDArray>();
-            for (int i = 0; i < nabla_b.Count; i++) { nabla_b.Add(np.zeros(biases[i].Shape)); }
+            for (int i = 0; i < biases.Count; i++) { nabla_b.Add(np.zeros(biases[i].shape)); }
 
             List<NDArray> nabla_w = new List<NDArray>();
-            for (int i = 0; i < nabla_w.Count; i++) { nabla_w.Add(np.zeros(weights[i].Shape)); }
+            for (int i = 0; i < weights.Count; i++) { nabla_w.Add(np.zeros(weights[i].shape)); }
 
             //feedforward
             NDArray activation = x;
-            List<NDArray> activations = new List<NDArray>(x);
+            List<NDArray> activations = new List<NDArray>();
+            activations.Add(x);
             List<NDArray> zs = new List<NDArray>();
-
             for (int i = 0; i < biases.Count; i++) {
-                NDArray z = NumSharp.np.dot(weights[i], activation) + biases[i];
+                NDArray z = np.dot(weights[i], activation) + biases[i];
                 zs.Add(z);
                 activation = sigmoid(z);
                 activations.Add(activation);
@@ -144,7 +141,7 @@ namespace NeuralNet.src
             nabla_b[nabla_b.Count - 1] = delta;
             nabla_w[nabla_w.Count - 1] = np.dot(delta, activations[activations.Count - 2].transpose());
 
-            for (int l = num_layers-2; l > 0; l-=1) {
+            for (int l = num_layers-1; l > 2; l--) {
                 NDArray z = zs[l];
                 NDArray sp = sigmoid_prime(z);
                 delta = np.dot(weights[l + 1].transpose(), delta) * sp;
@@ -159,15 +156,20 @@ namespace NeuralNet.src
         public int evaluate(List<Tuple<NDArray,NDArray>> test_data)
         {
             List<Tuple<NDArray,NDArray>> test_results = new List<Tuple<NDArray,NDArray>>();
+
             for(int i = 0; i < test_data.Count; i++)
             {
-                NDArray x = np.argmax(feedfoward(test_data[i].Item1));
+                NDArray x = np.argmax(feedforward(test_data[i].Item1));
                 NDArray y = test_data[i].Item2;
                 test_results.Add(new Tuple<NDArray, NDArray>(x,y));
             }
+            for (int i = 0; i < test_results.Count; i++) {
+                Console.WriteLine("One: " + test_results[i].Item1.Shape);
+                Console.WriteLine("Two: " + test_results[i].Item2.Shape);
+            }
             int sum = 0;
             for (int i = 0; i < test_results.Count;i++) {
-                if (test_results[i].Item1 == test_results[i].Item2) {
+                if (np.array_equal(test_results[i].Item1,test_results[i].Item2)) {
                     sum++;
                 }
             }
@@ -184,7 +186,7 @@ namespace NeuralNet.src
             return 1.0 / (1.0 + NumSharp.np.exp(-z));
         }
 
-        public NDArray sigmoid_prime(int z)
+        public NDArray sigmoid_prime(NDArray z)
         {
             return sigmoid(z) * (1 - sigmoid(z));
         }
