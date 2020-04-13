@@ -26,15 +26,16 @@ namespace NeuralNet
             List<Tuple<NDArray, NDArray>> validation_data = tuple.Item2;
             List<Tuple<NDArray, NDArray>> test_data = tuple.Item3;
 
-            Console.WriteLine(test_data[0].Item1.Shape);
-            Console.WriteLine(test_data[0].Item2.Shape);
+            //Console.WriteLine(test_data[0].Item1.Shape);
+            //Console.WriteLine(test_data[0].Item2.Shape);
+
 
             //Console.WriteLine(training_data.Count);
             //Console.WriteLine(validation_data.Count);
-            //Console.WriteLine(test_data.Count);
+            //Console.WriteLine(test_data.Count);            
 
-            //network network = new network(new int[] {784, 30, 10});
-            //network.SGD(training_data, 30, 10, 3.0, test_data);
+            network network = new network(new int[] { 784, 30, 10 });
+            network.SGD(training_data, 30, 10, 3.0, test_data);
         }
     }
 }

@@ -21,10 +21,14 @@ namespace NeuralNet.src
 
             string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
 
-            List<Tuple<NDArray, NDArray>> training_data = ReadTrainingData(path).ToList();
-            List<Tuple<NDArray, NDArray>> validation_data = ReadTestData(path).ToList();
-            List<Tuple<NDArray, NDArray>> test_data = ReadTestData(path).ToList();
+            List<Tuple<NDArray, NDArray>> training_data = ReadTrainingData(path).ToList(); // 60k
+            List<Tuple<NDArray, NDArray>> validation_data = new List<Tuple<NDArray, NDArray>>(); // last 10k elements of original training_data
 
+            validation_data.AddRange(training_data.GetRange(50000, 10000)); // add last 10k training_data to validation_data
+            training_data.RemoveRange((training_data.Count()-1)-10000, 10000); // remove those 10k from training_data so its 50k
+
+            List<Tuple<NDArray, NDArray>> test_data = ReadTestData(path).ToList();
+            
             return Tuple.Create(training_data, validation_data, test_data);
         }
 

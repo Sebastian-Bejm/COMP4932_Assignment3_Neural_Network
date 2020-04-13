@@ -161,15 +161,12 @@ namespace NeuralNet.src
             {
                 NDArray x = np.argmax(feedforward(test_data[i].Item1));
                 NDArray y = test_data[i].Item2;
-                test_results.Add(new Tuple<NDArray, NDArray>(x,y));
+                test_results.Add(Tuple.Create<NDArray, NDArray>(x,y));
             }
-            for (int i = 0; i < test_results.Count; i++) {
-                Console.WriteLine("One: " + test_results[i].Item1.Shape);
-                Console.WriteLine("Two: " + test_results[i].Item2.Shape);
-            }
+            
             int sum = 0;
             for (int i = 0; i < test_results.Count;i++) {
-                if (np.array_equal(test_results[i].Item1,test_results[i].Item2)) {
+                if (np.array_equal(np.atleast_1d(test_results[i].Item1),test_results[i].Item2)) {
                     sum++;
                 }
             }
