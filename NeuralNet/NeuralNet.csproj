@@ -85,6 +85,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class1.cs" />
     <Compile Include="fig\backprop_magnitude_nabla.cs" />
     <Compile Include="fig\replaced_by_d3\sigmoid.cs" />
     <Compile Include="fig\replaced_by_d3\relu.cs" />
