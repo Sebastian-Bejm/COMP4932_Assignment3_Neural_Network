@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 
 namespace NeuralNet
 {
@@ -137,7 +138,7 @@ namespace NeuralNet
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(190, 475);
+            this.label5.Location = new System.Drawing.Point(214, 632);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(0, 20);
             this.label5.TabIndex = 12;
@@ -163,11 +164,13 @@ namespace NeuralNet
             // 
             // pictureBox1
             // 
-            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.pictureBox1.Location = new System.Drawing.Point(33, 50);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(560, 560);
+            this.pictureBox1.Size = new System.Drawing.Size(280, 280);
+            Console.WriteLine(pictureBox1.Size);
+            this.pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 15;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_Mouse_Down);
@@ -180,7 +183,7 @@ namespace NeuralNet
             this.result.Location = new System.Drawing.Point(637, 362);
             this.result.Name = "result";
             this.result.Size = new System.Drawing.Size(200, 200);
-            this.result.SizeMode = PictureBoxSizeMode.StretchImage;
+            this.result.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.result.TabIndex = 16;
             this.result.TabStop = false;
             // 
