@@ -22,6 +22,7 @@ namespace NeuralNet
         bool isMouseDown = new bool();
 
         mnist_loader ml = new mnist_loader();
+        network Network;
         mnist_average_darkness mad = new mnist_average_darkness();
         Dictionary<int, float> avgs;
 
@@ -34,7 +35,11 @@ namespace NeuralNet
         public Form1()
         {
             InitializeComponent();
-            
+            Tuple<List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>> tuple = ml.load_data_wrapper(); // testing for now
+           
+            training_data = tuple.Item1;
+            validation_data = tuple.Item2;
+            test_data = tuple.Item3;
         }
 
         private void pictureBox1_Mouse_Down(object sender, MouseEventArgs e)
@@ -48,7 +53,6 @@ namespace NeuralNet
             if (isMouseDown == true) {
                 if (lastPoint != null) {
                     if (pictureBox1.Image == null) {
-                        //Console.WriteLine(pictureBox1.Height);
                         Bitmap bmp = new Bitmap(280, 280);
                         pictureBox1.Image = bmp;
                     }
@@ -86,52 +90,30 @@ namespace NeuralNet
                 g.DrawImage(pictureBox1.Image, 0, 0, pictureBox1.Image.Width / 10, pictureBox1.Height / 10);
             }
 
-            Console.WriteLine(res.Width);
-            Console.WriteLine(res.Height);
-            Console.WriteLine(pictureBox1.Height);
             result.Image = res;
-            result.Invalidate();
 
-            if (avgs == null)
-            {
-                avgs = mad.avg_darknesses(training_data);
-            }
-            Console.WriteLine("new Guess");
-            label5.Text = "Prediction: " + mad.guess_digit(res,avgs).ToString();
+            NDArray n = res.ToNDArray(flat: false, copy:true, discardAlpha: false).reshape(28,28,4);
 
-            Console.WriteLine(training_data[2].Item2.Shape);
+            NDArray rgb = n["0:28,0:28,3"];
+            rgb = rgb.reshape(784,1);
+
+            int predict = Network.evaluateSample(rgb);
+            label5.Text = "Prediction: " + predict.ToString();
         }
 
         private void trainBtn_Click(object sender, EventArgs e)
         {
-            Tuple<List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>> tuple = ml.load_data_wrapper(); // testing for now
-
-            training_data = tuple.Item1;
-            validation_data = tuple.Item2;
-            test_data = tuple.Item3;
-            int digit = 0;
-            foreach (object val in training_data[4].Item2)
-            {
-                if ((double)val != 0) { break; }
-                digit++;
-            }
-
-            //for (int i = 0; i < training_data[0].Item2.size; i++) {
-            //    Console.WriteLine(training_data[0].Item2.Shape);
-            //}
-
             int eps = Int32.Parse(epochs);
             int mbs = Int32.Parse(miniBatch);
             double learn = Double.Parse(learnRate);
 
-            network network = new network(new int[] { 784, 30, 10 });
-            network.SGD(training_data, eps, mbs, learn, test_data);
+            Network = new network(new int[] { 784,5,10});
+            Network.SGD(training_data, eps, mbs, learn, test_data);
         }
 
         private void epochTextbox_TextChanged(object sender, EventArgs e)
         {
             epochs = epochTextbox.Text;
-            //Console.WriteLine(epochs);
         }
 
         private void minibatchTextbox_TextChanged(object sender, EventArgs e)

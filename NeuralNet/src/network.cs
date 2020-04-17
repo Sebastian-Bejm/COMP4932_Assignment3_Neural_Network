@@ -35,7 +35,7 @@ namespace NeuralNet.src
             for (int y = 1; y < size.Length; y++) {
                 biases.Add(np.random.randn(size[y], 1));
             }
-            for (int x = 0, y = 1; x < size.Length-1; x++, y++) {
+            for (int x = 0, y = 1; y < size.Length; x++, y++) {
                 weights.Add(np.random.randn(size[y], size[x]));
             }
         }
@@ -171,6 +171,15 @@ namespace NeuralNet.src
                 }
             }
             return sum;
+        }
+
+        public int evaluateSample(NDArray image) {
+            image = image.astype(np.float32);
+            image /= 255.0;
+            image = image.reshape(784,1);
+            int x = np.asscalar<int>(np.argmax(feedforward(image)));
+            Console.WriteLine(x);
+            return x;
         }
 
         public NDArray cost_derivative(NDArray output_activations,NDArray y)
