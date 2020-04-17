@@ -1,5 +1,6 @@
 /NeuralNet/obj/Debug/*
+/NeuralNet/obj/Release/*
 /NeuralNet/.vs/*
 
-*.vs
+/.vs
 *.exe

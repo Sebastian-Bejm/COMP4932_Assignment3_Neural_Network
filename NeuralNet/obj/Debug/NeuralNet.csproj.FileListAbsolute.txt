@@ -60,3 +60,6 @@ C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network
 C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NumSharp.Bitmap.dll
 C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Drawing.Common.dll
 C:\Users\jayrr\source\repos\4932_Assignment3\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NumSharp.Bitmap.pdb
+C:\Users\Sebastian\Documents\Term 4\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NumSharp.Bitmap.dll
+C:\Users\Sebastian\Documents\Term 4\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\System.Drawing.Common.dll
+C:\Users\Sebastian\Documents\Term 4\COMP4932_Assignment3_Nerual_Network\NeuralNet\bin\Debug\NumSharp.Bitmap.pdb

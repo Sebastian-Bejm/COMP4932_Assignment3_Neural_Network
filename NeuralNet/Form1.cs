@@ -28,28 +28,13 @@ namespace NeuralNet
         public List<Tuple<NDArray, NDArray>> training_data;
         public List<Tuple<NDArray, NDArray>> validation_data;
         public List<Tuple<NDArray, NDArray>> test_data;
+
+        private string epochs, miniBatch, learnRate;
+
         public Form1()
         {
             InitializeComponent();
-            Tuple<List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>> tuple = ml.load_data_wrapper(); // testing for now
-
-            training_data = tuple.Item1;
-            validation_data = tuple.Item2;
-            test_data = tuple.Item3;
-            int digit = 0;
-            foreach (object val in training_data[4].Item2)
-            {
-                if ((double)val != 0) { break; }
-                digit++;
-            }
-
-            //for (int i = 0; i < training_data[0].Item2.size; i++) {
-            //    Console.WriteLine(training_data[0].Item2.Shape);
-            //}
-
-
-            //network network = new network(new int[] { 784, 30, 10 });
-            //network.SGD(training_data, 30, 10, 3.0, test_data);
+            
         }
 
         private void pictureBox1_Mouse_Down(object sender, MouseEventArgs e)
@@ -63,7 +48,7 @@ namespace NeuralNet
             if (isMouseDown == true) {
                 if (lastPoint != null) {
                     if (pictureBox1.Image == null) {
-                        Console.WriteLine(pictureBox1.Height);
+                        //Console.WriteLine(pictureBox1.Height);
                         Bitmap bmp = new Bitmap(280, 280);
                         pictureBox1.Image = bmp;
                     }
@@ -112,9 +97,53 @@ namespace NeuralNet
                 avgs = mad.avg_darknesses(training_data);
             }
             Console.WriteLine("new Guess");
-            label5.Text = mad.guess_digit(res,avgs).ToString();
+            label5.Text = "Prediction: " + mad.guess_digit(res,avgs).ToString();
 
-            //Console.WriteLine(training_data[2].Item2.Shape);
+            Console.WriteLine(training_data[2].Item2.Shape);
+        }
+
+        private void trainBtn_Click(object sender, EventArgs e)
+        {
+            Tuple<List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>, List<Tuple<NDArray, NDArray>>> tuple = ml.load_data_wrapper(); // testing for now
+
+            training_data = tuple.Item1;
+            validation_data = tuple.Item2;
+            test_data = tuple.Item3;
+            int digit = 0;
+            foreach (object val in training_data[4].Item2)
+            {
+                if ((double)val != 0) { break; }
+                digit++;
+            }
+
+            //for (int i = 0; i < training_data[0].Item2.size; i++) {
+            //    Console.WriteLine(training_data[0].Item2.Shape);
+            //}
+
+            int eps = Int32.Parse(epochs);
+            int mbs = Int32.Parse(miniBatch);
+            double learn = Double.Parse(learnRate);
+
+            network network = new network(new int[] { 784, 30, 10 });
+            network.SGD(training_data, eps, mbs, learn, test_data);
+        }
+
+        private void epochTextbox_TextChanged(object sender, EventArgs e)
+        {
+            epochs = epochTextbox.Text;
+            //Console.WriteLine(epochs);
+        }
+
+        private void minibatchTextbox_TextChanged(object sender, EventArgs e)
+        {
+            miniBatch = minibatchTextbox.Text;
+            //Console.WriteLine(miniBatch);
+        }
+
+        private void learnrateTextbox_TextChanged(object sender, EventArgs e)
+        {
+            learnRate = learnrateTextbox.Text;
+            //Console.WriteLine(learnRate);
         }
     }
 }
