@@ -15,6 +15,13 @@ namespace NeuralNet.src
 
         private static Random rng = new Random();
 
+        private List<int> epochResults = new List<int>();
+
+        public List<int> getResults()
+        {
+            return epochResults;
+        }
+
         public static void shuffle<T>(List<T> list) {
             int n = list.Count;
             while (n > 1) {
@@ -73,7 +80,9 @@ namespace NeuralNet.src
 
                 if (test_data != null)
                 {
-                    Console.WriteLine("Epoch {0}: {1} / {2}",j, evaluate(test_data),n_test);
+                    int res = evaluate(test_data);
+                    Console.WriteLine("Epoch {0}: {1} / {2}", j, res, n_test);
+                    epochResults.Add(res); // add epoch to results
                 }
                 else 
                 {

@@ -31,6 +31,7 @@ namespace NeuralNet
         public List<Tuple<NDArray, NDArray>> test_data;
 
         private string epochs, miniBatch, learnRate;
+        private string layers;
 
         public Form1()
         {
@@ -101,14 +102,83 @@ namespace NeuralNet
             label5.Text = "Prediction: " + predict.ToString();
         }
 
+        private static bool isInt(string s)
+        {
+            return int.TryParse(s, out int n);
+        }
+
+        private static bool isDouble(string s)
+        {
+            return double.TryParse(s, out double n);
+        }
+
         private void trainBtn_Click(object sender, EventArgs e)
         {
-            int eps = Int32.Parse(epochs);
-            int mbs = Int32.Parse(miniBatch);
-            double learn = Double.Parse(learnRate);
 
-            Network = new network(new int[] { 784,5,10});
+            int eps, mbs;
+            double learn;
+            int neurons;
+
+            if (isInt(epochs))
+            {
+                eps = int.Parse(epochs);
+            } else
+            {
+                MessageBox.Show("Epochs must be an integer");
+                return;
+            }
+
+            if (isInt(miniBatch))
+            {
+                mbs = int.Parse(miniBatch);
+            }
+            else
+            {
+                MessageBox.Show("Mini batch must be an integer");
+                return;
+            }
+
+            if (isDouble(learnRate))
+            {
+                learn = double.Parse(learnRate);
+            } else
+            {
+                MessageBox.Show("Learning rate must be a double");
+                return;
+            }
+            if (isInt(layers))
+            {
+                int tempNeurons = int.Parse(layers);
+                if (tempNeurons <= 10)
+                {
+                    neurons = tempNeurons;
+                } else
+                {
+                    MessageBox.Show("Hidden layers must be less or equal to 10");
+                    return;
+                }
+            } else
+            {
+                MessageBox.Show("Hidden layers must be an integer");
+                return;
+            }
+
+
+            Network = new network(new int[] { 784, neurons, 10 });
             Network.SGD(training_data, eps, mbs, learn, test_data);
+
+            // show results
+            List<int> results = Network.getResults();
+            int bestEpoch = results[0];
+
+            for (int i = 0; i < results.Count(); i++)
+            {
+                if (results[i] > bestEpoch)
+                {
+                    bestEpoch = results[i];
+                }
+            }
+            MessageBox.Show("Best classification rate is : " + ((double) bestEpoch / 100) + "%");
         }
 
         private void epochTextbox_TextChanged(object sender, EventArgs e)
@@ -116,16 +186,19 @@ namespace NeuralNet
             epochs = epochTextbox.Text;
         }
 
+        private void hiddenLayerTextbox_TextChanged(object sender, EventArgs e)
+        {
+            layers = hiddenLayerTextbox.Text;
+        }
+
         private void minibatchTextbox_TextChanged(object sender, EventArgs e)
         {
             miniBatch = minibatchTextbox.Text;
-            //Console.WriteLine(miniBatch);
         }
 
         private void learnrateTextbox_TextChanged(object sender, EventArgs e)
         {
             learnRate = learnrateTextbox.Text;
-            //Console.WriteLine(learnRate);
         }
     }
 }

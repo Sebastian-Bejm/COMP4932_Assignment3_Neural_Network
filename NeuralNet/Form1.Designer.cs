@@ -46,6 +46,8 @@ namespace NeuralNet
             this.button5 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.result = new System.Windows.Forms.PictureBox();
+            this.hiddenLayerTextbox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.result)).BeginInit();
             this.SuspendLayout();
@@ -200,11 +202,30 @@ namespace NeuralNet
             this.result.TabIndex = 16;
             this.result.TabStop = false;
             // 
+            // hiddenLayerTextbox
+            // 
+            this.hiddenLayerTextbox.Location = new System.Drawing.Point(554, 88);
+            this.hiddenLayerTextbox.Name = "hiddenLayerTextbox";
+            this.hiddenLayerTextbox.Size = new System.Drawing.Size(73, 22);
+            this.hiddenLayerTextbox.TabIndex = 17;
+            this.hiddenLayerTextbox.TextChanged += new System.EventHandler(this.hiddenLayerTextbox_TextChanged);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(551, 68);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(100, 17);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Hidden Layers";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 538);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.hiddenLayerTextbox);
             this.Controls.Add(this.result);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.button5);
@@ -246,6 +267,8 @@ namespace NeuralNet
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.PictureBox pictureBox1;
         private PictureBox result;
+        private TextBox hiddenLayerTextbox;
+        private Label label6;
     }
 }
 

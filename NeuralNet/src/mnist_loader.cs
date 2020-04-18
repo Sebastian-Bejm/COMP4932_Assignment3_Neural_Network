@@ -53,7 +53,6 @@ namespace NeuralNet.src
                 yield return item;
             }
         }
-
         
         /*
          * Support method for reading in the data from the filepath specified
